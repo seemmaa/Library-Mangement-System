@@ -1,0 +1,1001 @@
+2025-05-11 01:31:15.172 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-11 01:31:15.249 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-05-11 01:31:15.327 +03:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-05-11 01:31:15.469 +03:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-05-11 01:31:15.516 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-11 01:31:15.522 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-11 01:31:15.712 +03:00 [INF] Executed DbCommand (187ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-11 01:31:15.734 +03:00 [INF] Applying migration '20250510223047_adAvailableCopiesandtimeBorrowed'.
+2025-05-11 01:31:16.123 +03:00 [INF] Executed DbCommand (357ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @var sysname;
+SELECT @var = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Books]') AND [c].[name] = N'PublicationYear');
+IF @var IS NOT NULL EXEC(N'ALTER TABLE [Books] DROP CONSTRAINT [' + @var + '];');
+ALTER TABLE [Books] ALTER COLUMN [PublicationYear] datetime2 NULL;
+2025-05-11 01:31:16.175 +03:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Books] ADD [AvailableCopies] int NOT NULL DEFAULT 0;
+2025-05-11 01:31:16.181 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Books] ADD [TimesBorrowed] int NOT NULL DEFAULT 0;
+2025-05-11 01:31:16.191 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250510223047_adAvailableCopiesandtimeBorrowed', N'9.0.4');
+2025-05-11 01:31:16.249 +03:00 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-05-11 01:32:05.560 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 01:32:06.406 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 01:32:06.407 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 01:32:06.779 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 01:32:06.780 +03:00 [INF] Hosting environment: Development
+2025-05-11 01:32:06.780 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 01:32:18.078 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 01:32:18.739 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 672.0253ms
+2025-05-11 01:32:19.298 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 01:32:19.331 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 01:32:19.367 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 68.4675ms
+2025-05-11 01:32:19.542 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 244.0057ms
+2025-05-11 01:32:19.888 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 01:32:19.980 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 92.7469ms
+2025-05-11 01:32:43.029 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 01:32:43.438 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 01:32:43.531 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 01:32:52.000 +03:00 [INF] Executed DbCommand (1,888ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 01:32:53.047 +03:00 [INF] Executed DbCommand (81ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 01:32:53.359 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 01:32:53.385 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 01:32:53.414 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 9876.4454ms
+2025-05-11 01:32:53.415 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 01:32:53.435 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 10406.4238ms
+2025-05-11 01:33:09.754 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 01:33:09.925 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Member)
+2025-05-11 01:33:09.944 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-05-11 01:33:09.944 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 401 0 null 190.7789ms
+2025-05-11 01:33:27.255 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 01:33:27.441 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 01:33:27.457 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 01:33:28.068 +03:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 01:33:28.178 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 01:33:28.270 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 812.5234ms
+2025-05-11 01:33:28.270 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 01:33:28.271 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 1015.586ms
+2025-05-11 01:33:48.834 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=0a480fec-ab71-4b47-8cef-8ad9df73407f - null 0
+2025-05-11 01:33:48.844 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 01:33:48.868 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 01:33:49.122 +03:00 [INF] Executed DbCommand (90ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 01:33:49.194 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Id] = @__p_0
+2025-05-11 01:33:49.198 +03:00 [WRN] Book with ID 0a480fec-ab71-4b47-8cef-8ad9df73407f is out of stock.
+2025-05-11 01:33:49.199 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 01:33:49.199 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 330.9936ms
+2025-05-11 01:33:49.200 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 01:33:49.200 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=0a480fec-ab71-4b47-8cef-8ad9df73407f - 200 null text/plain; charset=utf-8 365.8768ms
+2025-05-11 01:41:08.740 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 01:41:10.410 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 01:41:10.413 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 01:41:11.015 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 01:41:11.055 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 01:41:11.056 +03:00 [INF] Hosting environment: Development
+2025-05-11 01:41:11.056 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 01:41:11.759 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 758.4085ms
+2025-05-11 01:41:15.880 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 01:41:15.898 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 01:41:15.913 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 33.6125ms
+2025-05-11 01:41:16.501 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 602.9385ms
+2025-05-11 01:41:16.682 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 01:41:16.710 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 28.6349ms
+2025-05-11 01:41:41.932 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 01:41:42.184 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 01:41:42.275 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 01:41:46.936 +03:00 [INF] Executed DbCommand (253ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 01:41:47.780 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 01:41:47.859 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 01:41:47.897 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 01:41:47.929 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 5642.138ms
+2025-05-11 01:41:47.930 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 01:41:47.950 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 6018.6016ms
+2025-05-11 01:42:03.065 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 01:42:03.169 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Member)
+2025-05-11 01:42:03.183 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-05-11 01:42:03.184 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 401 0 null 118.9068ms
+2025-05-11 01:42:13.776 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 01:42:13.979 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 01:42:13.990 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 01:42:14.342 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 01:42:14.444 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 01:42:14.492 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 500.6367ms
+2025-05-11 01:42:14.492 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 01:42:14.493 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 717.0021ms
+2025-05-11 01:42:32.154 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=bb136557-5436-41f3-8fc1-67c26e0cb359 - null 0
+2025-05-11 01:42:32.165 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 01:42:32.187 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 01:42:32.442 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 01:42:32.565 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Id] = @__p_0
+2025-05-11 01:42:32.722 +03:00 [INF] Executed DbCommand (81ms) [Parameters=[@__bookId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Borrowings] AS [b]
+        WHERE [b].[BookId] = @__bookId_0 AND [b].[UserId] = @__userId_1 AND [b].[IsReturned] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-11 01:42:32.730 +03:00 [WRN] User omar@gmail.com has already borrowed book React.
+2025-05-11 01:42:32.730 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 01:42:32.731 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 543.9037ms
+2025-05-11 01:42:32.731 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 01:42:32.732 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=bb136557-5436-41f3-8fc1-67c26e0cb359 - 200 null text/plain; charset=utf-8 578.2915ms
+2025-05-11 01:42:44.945 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=bb136557-5436-41f3-8fc1-67c26e0cb359 - null 0
+2025-05-11 01:42:45.037 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 01:42:45.049 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 01:42:45.221 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 01:42:45.223 +03:00 [WRN] Borrowing record with ID bb136557-5436-41f3-8fc1-67c26e0cb359 not found.
+2025-05-11 01:42:45.224 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 01:42:45.224 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 175.1379ms
+2025-05-11 01:42:45.224 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 01:42:45.225 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=bb136557-5436-41f3-8fc1-67c26e0cb359 - 200 null text/plain; charset=utf-8 280.4906ms
+2025-05-11 01:43:09.298 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 01:43:09.302 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 01:43:09.344 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 01:43:09.414 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 01:43:09.541 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 01:43:09.565 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 220.1908ms
+2025-05-11 01:43:09.565 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 01:43:09.565 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 267.5656ms
+2025-05-11 01:43:59.261 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - null 0
+2025-05-11 01:43:59.272 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 01:43:59.274 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 01:43:59.305 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 01:43:59.311 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 01:43:59.311 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 36.1802ms
+2025-05-11 01:43:59.311 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 01:43:59.311 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - 200 null text/plain; charset=utf-8 51.7773ms
+2025-05-11 09:59:39.200 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 09:59:39.466 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 244.9196ms
+2025-05-11 09:59:39.866 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 09:59:39.871 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 09:59:39.885 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 17.8605ms
+2025-05-11 09:59:40.060 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 189.6939ms
+2025-05-11 09:59:40.413 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 09:59:40.685 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 271.9227ms
+2025-05-11 10:00:03.424 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 10:00:03.527 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 10:00:03.581 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 10:00:04.068 +03:00 [INF] Executed DbCommand (203ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 10:00:04.346 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 10:00:04.358 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 10:00:04.364 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 10:00:04.366 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 784.8196ms
+2025-05-11 10:00:04.366 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 10:00:04.368 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 944.0651ms
+2025-05-11 10:00:39.468 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 10:00:39.555 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 10:00:39.555 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 10:00:39.583 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 10:00:39.587 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:00:39.590 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 34.9466ms
+2025-05-11 10:00:39.590 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 10:00:39.591 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 123.632ms
+2025-05-11 10:01:02.236 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/borrowing-history - null null
+2025-05-11 10:01:02.245 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem)'
+2025-05-11 10:01:02.288 +03:00 [INF] Route matched with {action = "GetBorrowingHistory", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBorrowingHistory() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:01:02.346 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 10:01:02.361 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:01:02.363 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem) in 75.2517ms
+2025-05-11 10:01:02.363 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem)'
+2025-05-11 10:01:02.364 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/borrowing-history - 200 null application/json; charset=utf-8 127.7126ms
+2025-05-11 10:01:25.901 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=20178f8e-fb48-4e59-a189-051e2c43bd92 - null 0
+2025-05-11 10:01:25.964 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:01:25.964 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:01:26.005 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 10:01:26.007 +03:00 [WRN] Book with ID bb136557-5436-41f3-8fc1-67c26e0cb359 already returned.
+2025-05-11 10:01:26.007 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 10:01:26.008 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 43.564ms
+2025-05-11 10:01:26.009 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:01:26.010 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=20178f8e-fb48-4e59-a189-051e2c43bd92 - 200 null text/plain; charset=utf-8 108.9762ms
+2025-05-11 10:02:04.266 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - null 0
+2025-05-11 10:02:04.268 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:02:04.268 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:02:04.352 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 10:02:04.356 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 10:02:04.356 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 88.1018ms
+2025-05-11 10:02:04.356 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:02:04.357 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - 200 null text/plain; charset=utf-8 90.3676ms
+2025-05-11 10:03:10.440 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 10:03:11.322 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 10:03:11.323 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 10:03:11.602 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 10:03:11.602 +03:00 [INF] Hosting environment: Development
+2025-05-11 10:03:11.603 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 10:06:31.488 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 10:06:32.227 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 764.2661ms
+2025-05-11 10:06:32.693 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 10:06:32.736 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 43.7821ms
+2025-05-11 10:06:32.747 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 10:06:32.941 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 194.2593ms
+2025-05-11 10:06:33.239 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 10:06:33.398 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 158.6153ms
+2025-05-11 10:07:20.093 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 10:07:20.978 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 10:07:20.980 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 10:07:21.509 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 10:07:21.509 +03:00 [INF] Hosting environment: Development
+2025-05-11 10:07:21.509 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 10:09:15.974 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 10:09:16.737 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 786.8345ms
+2025-05-11 10:09:16.983 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 10:09:16.998 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 10:09:17.016 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 32.8759ms
+2025-05-11 10:09:17.206 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 211.5467ms
+2025-05-11 10:09:17.886 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 10:09:18.057 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 171.3777ms
+2025-05-11 10:09:49.158 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 10:09:49.404 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 10:09:49.477 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 10:09:54.959 +03:00 [INF] Executed DbCommand (288ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 10:09:55.939 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 10:09:56.038 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 10:09:56.073 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 10:09:56.103 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 6615.5124ms
+2025-05-11 10:09:56.104 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 10:09:56.129 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 6971.0825ms
+2025-05-11 10:10:45.302 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 10:10:45.665 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:10:45.683 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:10:46.498 +03:00 [INF] Executed DbCommand (43ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 10:10:46.674 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:10:46.741 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 1057.5939ms
+2025-05-11 10:10:46.741 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:10:46.742 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 1444.6911ms
+2025-05-11 10:11:03.121 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - null 0
+2025-05-11 10:11:03.136 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:11:03.158 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:11:03.344 +03:00 [INF] Executed DbCommand (34ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 10:11:03.812 +03:00 [INF] Executed DbCommand (38ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32), @p4='?' (DbType = Guid), @p2='?' (DbType = Boolean), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Books] SET [AvailableCopies] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Borrowings] SET [IsReturned] = @p2, [ReturnDate] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+2025-05-11 10:11:03.840 +03:00 [INF] Book with ID bb136557-5436-41f3-8fc1-67c26e0cb359 returned successfully.
+2025-05-11 10:11:03.840 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 10:11:03.841 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 682.3376ms
+2025-05-11 10:11:03.841 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 10:11:03.841 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=70d1c5aa-68d5-4383-871a-d2bfe6610496 - 200 null text/plain; charset=utf-8 720.8634ms
+2025-05-11 10:11:13.185 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 10:11:13.197 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:11:13.198 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:11:13.237 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 10:11:13.239 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:11:13.239 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 41.1447ms
+2025-05-11 10:11:13.240 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:11:13.242 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 56.7623ms
+2025-05-11 10:13:47.697 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 10:13:47.768 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 10:13:47.827 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 10:13:48.015 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 10:13:48.026 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:13:48.067 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 238.7633ms
+2025-05-11 10:13:48.067 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 10:13:48.070 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 385.6521ms
+2025-05-11 10:14:07.165 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=bb136557-5436-41f3-8fc1-67c26e0cb359 - null 0
+2025-05-11 10:14:07.169 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 10:14:07.197 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:14:07.422 +03:00 [INF] Executed DbCommand (76ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 10:14:07.466 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Id] = @__p_0
+2025-05-11 10:14:07.620 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[@__bookId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Borrowings] AS [b]
+        WHERE [b].[BookId] = @__bookId_0 AND [b].[UserId] = @__userId_1 AND [b].[IsReturned] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-11 10:14:07.704 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Borrowings] AS [b]
+WHERE [b].[UserId] = @__userId_0 AND [b].[ReturnDate] = '0001-01-01T00:00:00.0000000'
+2025-05-11 10:14:07.838 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p3='?' (DbType = Guid), @p4='?' (DbType = Guid), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTime2), @p9='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Books] SET [AvailableCopies] = @p0, [TimesBorrowed] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+INSERT INTO [Borrowings] ([Id], [BookId], [BorrowDate], [DueDate], [IsReturned], [ReturnDate], [UserId])
+VALUES (@p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2025-05-11 10:14:07.842 +03:00 [INF] Book React borrowed by user omar@gmail.com.
+2025-05-11 10:14:07.843 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 10:14:07.843 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 645.6213ms
+2025-05-11 10:14:07.844 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 10:14:07.844 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=bb136557-5436-41f3-8fc1-67c26e0cb359 - 200 null text/plain; charset=utf-8 679.2812ms
+2025-05-11 10:14:18.575 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 10:14:18.645 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:14:18.646 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 10:14:18.665 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 10:14:18.668 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 10:14:18.669 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 23.2866ms
+2025-05-11 10:14:18.670 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 10:14:18.671 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 96.9735ms
+2025-05-11 14:21:03.780 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 14:21:05.525 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 14:21:05.526 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 14:21:05.827 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 14:21:05.828 +03:00 [INF] Hosting environment: Development
+2025-05-11 14:21:05.828 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 14:22:25.350 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 14:22:27.246 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 1926.9282ms
+2025-05-11 14:22:27.720 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 14:22:27.740 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 14:22:27.753 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 33.6515ms
+2025-05-11 14:22:28.624 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 884.1977ms
+2025-05-11 14:22:28.774 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 14:22:28.964 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 189.9981ms
+2025-05-11 14:22:50.894 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 14:22:51.417 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:22:51.550 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 14:22:56.437 +03:00 [INF] Executed DbCommand (619ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 14:22:57.258 +03:00 [INF] Executed DbCommand (48ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 14:22:57.306 +03:00 [INF] Login successful for user sema@gmail.com
+2025-05-11 14:22:57.325 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 14:22:57.344 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 5786.0653ms
+2025-05-11 14:22:57.347 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:22:57.365 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 6471.0256ms
+2025-05-11 14:23:30.894 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Users - null null
+2025-05-11 14:23:30.993 +03:00 [INF] Failed to validate the token.
+System.ArgumentException: IDX14102: Unable to decode the header '[PII of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]' as Base64Url encoded string.
+ ---> System.FormatException: IDX10400: Unable to decode: '[PII of type 'System.String' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]' as Base64url encoded string.
+   at Microsoft.IdentityModel.Tokens.Base64UrlEncoding.ValidateAndGetOutputSize(ReadOnlySpan`1 strSpan, Int32 offset, Int32 length)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.CreateClaimSet(ReadOnlySpan`1 strSpan, Int32 startIndex, Int32 length, Boolean createHeaderClaimSet)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   --- End of inner exception stack trace ---
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString, TryReadJwtClaim tryReadJwtClaim)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2025-05-11 14:23:31.062 +03:00 [INF] Bearer was not authenticated. Failure message: IDX14102: Unable to decode the header '[PII of type 'Microsoft.IdentityModel.Logging.SecurityArtifact' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]' as Base64Url encoded string.
+2025-05-11 14:23:31.081 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2025-05-11 14:23:31.095 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-05-11 14:23:31.095 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Users - 401 0 null 201.3108ms
+2025-05-11 14:24:31.125 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Users - null null
+2025-05-11 14:24:31.443 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 14:24:31.464 +03:00 [INF] Route matched with {action = "GetAllMembers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllMembers() on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:24:32.055 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:24:32.178 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.User, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:24:32.222 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem) in 758.2127ms
+2025-05-11 14:24:32.224 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 14:24:32.224 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Users - 200 null application/json; charset=utf-8 1099.2379ms
+2025-05-11 14:25:02.332 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - null 0
+2025-05-11 14:25:02.377 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:03.012 +03:00 [INF] Route matched with {action = "DeactivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeactivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:25:03.411 +03:00 [INF] Executed DbCommand (47ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 14:25:03.426 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:25:04.137 +03:00 [INF] Executed DbCommand (71ms) [Parameters=[@p17='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTimeOffset), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [Email] = @p2, [EmailConfirmed] = @p3, [IsActive] = @p4, [LockoutEnabled] = @p5, [LockoutEnd] = @p6, [NormalizedEmail] = @p7, [NormalizedUserName] = @p8, [Password] = @p9, [PasswordHash] = @p10, [PhoneNumber] = @p11, [PhoneNumberConfirmed] = @p12, [Role] = @p13, [SecurityStamp] = @p14, [TwoFactorEnabled] = @p15, [UserName] = @p16
+OUTPUT 1
+WHERE [Id] = @p17;
+2025-05-11 14:25:04.211 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 14:25:04.213 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem) in 1201.1288ms
+2025-05-11 14:25:04.214 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:04.215 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - 200 null text/plain; charset=utf-8 1882.2781ms
+2025-05-11 14:25:09.781 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Users - null null
+2025-05-11 14:25:09.795 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 14:25:09.797 +03:00 [INF] Route matched with {action = "GetAllMembers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllMembers() on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:25:09.940 +03:00 [INF] Executed DbCommand (121ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:25:09.941 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.User, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:25:09.949 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem) in 152.4083ms
+2025-05-11 14:25:09.949 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 14:25:09.950 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Users - 200 null application/json; charset=utf-8 168.4378ms
+2025-05-11 14:25:23.282 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - null 0
+2025-05-11 14:25:23.286 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:23.286 +03:00 [INF] Route matched with {action = "DeactivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeactivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:25:23.316 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 14:25:23.560 +03:00 [INF] Executed DbCommand (236ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:25:23.561 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 14:25:23.562 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem) in 275.694ms
+2025-05-11 14:25:23.562 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:23.562 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - 200 null text/plain; charset=utf-8 280.036ms
+2025-05-11 14:25:33.262 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/activate-member - null 0
+2025-05-11 14:25:33.265 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:33.276 +03:00 [INF] Route matched with {action = "ActivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ActivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:25:33.610 +03:00 [INF] Executed DbCommand (326ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 14:25:33.620 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:25:33.821 +03:00 [INF] Executed DbCommand (196ms) [Parameters=[@p17='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTimeOffset), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [Email] = @p2, [EmailConfirmed] = @p3, [IsActive] = @p4, [LockoutEnabled] = @p5, [LockoutEnd] = @p6, [NormalizedEmail] = @p7, [NormalizedUserName] = @p8, [Password] = @p9, [PasswordHash] = @p10, [PhoneNumber] = @p11, [PhoneNumberConfirmed] = @p12, [Role] = @p13, [SecurityStamp] = @p14, [TwoFactorEnabled] = @p15, [UserName] = @p16
+OUTPUT 1
+WHERE [Id] = @p17;
+2025-05-11 14:25:33.822 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 14:25:33.823 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem) in 546.447ms
+2025-05-11 14:25:33.823 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:33.823 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/activate-member - 200 null text/plain; charset=utf-8 561.4077ms
+2025-05-11 14:25:38.256 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/activate-member - null 0
+2025-05-11 14:25:38.258 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:38.258 +03:00 [INF] Route matched with {action = "ActivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ActivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 14:25:38.326 +03:00 [INF] Executed DbCommand (64ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 14:25:38.335 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 14:25:38.338 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 14:25:38.338 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem) in 80.4128ms
+2025-05-11 14:25:38.338 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.ActivateMember (LibraryManagementSystem)'
+2025-05-11 14:25:38.339 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/activate-member - 200 null text/plain; charset=utf-8 82.4586ms
+2025-05-11 14:26:06.664 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings - null null
+2025-05-11 14:26:06.667 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetAllBorrowings (LibraryManagementSystem)'
+2025-05-11 14:26:06.991 +03:00 [INF] Route matched with {action = "GetAllBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 14:26:07.196 +03:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+2025-05-11 14:26:07.322 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Borrowing, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:26:07.351 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetAllBorrowings (LibraryManagementSystem) in 360.1456ms
+2025-05-11 14:26:07.351 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetAllBorrowings (LibraryManagementSystem)'
+2025-05-11 14:26:07.352 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings - 200 null application/json; charset=utf-8 688.5846ms
+2025-05-11 14:26:26.258 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/search?searchTerm=sandra - null null
+2025-05-11 14:26:26.260 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem)'
+2025-05-11 14:26:26.279 +03:00 [INF] Route matched with {action = "SearchBooks", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SearchBooks(System.String) on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 14:26:27.522 +03:00 [INF] Executed DbCommand (1,161ms) [Parameters=[@__searchTerm_0_contains='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Title] LIKE @__searchTerm_0_contains ESCAPE N'\' OR [b].[Author] LIKE @__searchTerm_0_contains ESCAPE N'\' OR [b].[Genre] LIKE @__searchTerm_0_contains ESCAPE N'\'
+2025-05-11 14:26:27.523 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:26:27.534 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem) in 1255.3347ms
+2025-05-11 14:26:27.535 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem)'
+2025-05-11 14:26:27.535 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/search?searchTerm=sandra - 200 null application/json; charset=utf-8 1276.9337ms
+2025-05-11 14:26:35.060 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/search?searchTerm=lina - null null
+2025-05-11 14:26:35.070 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem)'
+2025-05-11 14:26:35.070 +03:00 [INF] Route matched with {action = "SearchBooks", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SearchBooks(System.String) on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 14:26:35.109 +03:00 [INF] Executed DbCommand (27ms) [Parameters=[@__searchTerm_0_contains='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Title] LIKE @__searchTerm_0_contains ESCAPE N'\' OR [b].[Author] LIKE @__searchTerm_0_contains ESCAPE N'\' OR [b].[Genre] LIKE @__searchTerm_0_contains ESCAPE N'\'
+2025-05-11 14:26:35.110 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:26:35.117 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem) in 46.903ms
+2025-05-11 14:26:35.117 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.SearchBooks (LibraryManagementSystem)'
+2025-05-11 14:26:35.117 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/search?searchTerm=lina - 200 null application/json; charset=utf-8 57.8767ms
+2025-05-11 14:32:33.467 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 14:32:34.498 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 14:32:34.499 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 14:32:34.723 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 14:32:34.723 +03:00 [INF] Hosting environment: Development
+2025-05-11 14:32:34.724 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 14:32:53.066 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 14:32:53.681 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 628.9484ms
+2025-05-11 14:32:54.411 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 14:32:54.414 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 14:32:54.467 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 54.9668ms
+2025-05-11 14:32:54.716 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 301.7104ms
+2025-05-11 14:32:55.065 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 14:32:55.158 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 92.3463ms
+2025-05-11 14:36:21.486 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 14:36:21.976 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:36:22.128 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 14:36:28.540 +03:00 [INF] Executed DbCommand (549ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 14:36:29.813 +03:00 [INF] Executed DbCommand (97ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 14:36:29.923 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 14:36:29.964 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 14:36:29.986 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 7851.032ms
+2025-05-11 14:36:29.989 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:36:30.010 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 8531.485ms
+2025-05-11 14:37:02.594 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 14:37:02.892 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 14:37:02.905 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 14:37:03.481 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 14:37:03.587 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:37:03.630 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 724.2538ms
+2025-05-11 14:37:03.631 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 14:37:03.631 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 1037.512ms
+2025-05-11 14:37:30.541 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 14:37:30.551 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 14:37:30.562 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 14:37:31.015 +03:00 [INF] Executed DbCommand (330ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 14:37:31.019 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 14:37:31.027 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 465.2138ms
+2025-05-11 14:37:31.027 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 14:37:31.027 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 487.2485ms
+2025-05-11 14:37:52.100 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 14:37:52.106 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:37:52.107 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 14:37:52.472 +03:00 [INF] Executed DbCommand (281ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 14:37:52.747 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 14:37:52.748 +03:00 [INF] Login successful for user sema@gmail.com
+2025-05-11 14:37:52.749 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 14:37:52.749 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 642.3073ms
+2025-05-11 14:37:52.749 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 14:37:52.751 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 650.0786ms
+2025-05-11 14:39:29.523 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Books - application/json 139
+2025-05-11 14:39:29.563 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem)'
+2025-05-11 14:39:29.613 +03:00 [INF] Route matched with {action = "AddBook", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBook(LibraryManagementSystem.Models.AddBookDto) on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 14:39:29.807 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-05-11 14:39:29.896 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem) in 282.7487ms
+2025-05-11 14:39:29.897 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem)'
+2025-05-11 14:39:29.897 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Books - 400 null application/problem+json; charset=utf-8 378.8344ms
+2025-05-11 14:41:01.928 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Books - application/json 139
+2025-05-11 14:41:01.994 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem)'
+2025-05-11 14:41:02.013 +03:00 [INF] Route matched with {action = "AddBook", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBook(LibraryManagementSystem.Models.AddBookDto) on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 14:41:02.079 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-05-11 14:41:02.082 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem) in 68.3162ms
+2025-05-11 14:41:02.083 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.AddBook (LibraryManagementSystem)'
+2025-05-11 14:41:02.084 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Books - 400 null application/problem+json; charset=utf-8 164.2153ms
+2025-05-11 14:43:08.250 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 14:43:08.471 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 335.25ms
+2025-05-11 14:43:08.751 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 14:43:08.755 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 14:43:08.837 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 86.3721ms
+2025-05-11 14:43:08.908 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 150.5198ms
+2025-05-11 14:43:09.207 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 14:43:09.525 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 317.6034ms
+2025-05-11 15:06:29.954 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 15:06:30.733 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 15:06:30.735 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 15:06:31.202 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 15:06:31.202 +03:00 [INF] Hosting environment: Development
+2025-05-11 15:06:31.203 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
+2025-05-11 15:06:33.314 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/index.html - null null
+2025-05-11 15:06:35.138 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/index.html - 200 null text/html;charset=utf-8 1833.583ms
+2025-05-11 15:06:35.395 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - null null
+2025-05-11 15:06:35.418 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/_vs/browserLink - null null
+2025-05-11 15:06:35.520 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 124.4927ms
+2025-05-11 15:06:37.108 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1690.6682ms
+2025-05-11 15:06:37.773 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - null null
+2025-05-11 15:06:37.899 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 125.8343ms
+2025-05-11 15:07:07.050 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 15:07:07.999 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:07:08.142 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 15:07:15.165 +03:00 [INF] Executed DbCommand (642ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 15:07:16.301 +03:00 [INF] Executed DbCommand (92ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 15:07:16.410 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 15:07:16.451 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 15:07:16.485 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 8327.2772ms
+2025-05-11 15:07:16.489 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:07:16.514 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 9513.3483ms
+2025-05-11 15:07:18.326 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 15:07:18.330 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:07:18.333 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 15:07:19.474 +03:00 [INF] Executed DbCommand (818ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 15:07:19.930 +03:00 [INF] Executed DbCommand (54ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 15:07:19.932 +03:00 [INF] Login successful for user omar@gmail.com
+2025-05-11 15:07:19.934 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 15:07:19.935 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 1601.349ms
+2025-05-11 15:07:19.935 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:07:19.936 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 1609.7695ms
+2025-05-11 15:08:09.633 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Books/Catalog - null null
+2025-05-11 15:08:09.938 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 15:08:09.967 +03:00 [INF] Route matched with {action = "GetCatalog", controller = "Books"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetCatalog() on controller LibraryManagementSystem.Controllers.BooksController (LibraryManagementSystem).
+2025-05-11 15:08:10.797 +03:00 [INF] Executed DbCommand (217ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+2025-05-11 15:08:10.909 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.Book, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:08:10.953 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem) in 985.6073ms
+2025-05-11 15:08:10.953 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BooksController.GetCatalog (LibraryManagementSystem)'
+2025-05-11 15:08:10.954 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Books/Catalog - 200 null application/json; charset=utf-8 1320.5331ms
+2025-05-11 15:08:26.943 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=3c16b763-c53b-4f29-a134-dd8339151b0c - null 0
+2025-05-11 15:08:26.949 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:08:26.963 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:08:27.286 +03:00 [INF] Executed DbCommand (157ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 15:08:27.427 +03:00 [INF] Executed DbCommand (47ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Id] = @__p_0
+2025-05-11 15:08:27.766 +03:00 [INF] Executed DbCommand (240ms) [Parameters=[@__bookId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Borrowings] AS [b]
+        WHERE [b].[BookId] = @__bookId_0 AND [b].[UserId] = @__userId_1 AND [b].[IsReturned] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-11 15:08:27.771 +03:00 [WRN] User omar@gmail.com has already borrowed book English in workplace.
+2025-05-11 15:08:27.772 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:08:27.773 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 810.1584ms
+2025-05-11 15:08:27.773 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:08:27.774 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=3c16b763-c53b-4f29-a134-dd8339151b0c - 200 null text/plain; charset=utf-8 831.512ms
+2025-05-11 15:08:41.699 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 15:08:41.729 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:08:41.768 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:08:42.911 +03:00 [INF] Executed DbCommand (833ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 15:08:43.055 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:08:43.091 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 1323.7375ms
+2025-05-11 15:08:43.092 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:08:43.092 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 1396.6055ms
+2025-05-11 15:09:20.810 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=2ed60396-f3c5-4686-92f8-a2d0bf0c58b4 - null 0
+2025-05-11 15:09:20.812 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:09:20.812 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:09:20.973 +03:00 [INF] Executed DbCommand (140ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 15:09:20.984 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[Author], [b].[AvailableCopies], [b].[Genre], [b].[ISBN], [b].[PublicationYear], [b].[Quantity], [b].[TimesBorrowed], [b].[Title]
+FROM [Books] AS [b]
+WHERE [b].[Id] = @__p_0
+2025-05-11 15:09:21.000 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__bookId_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Borrowings] AS [b]
+        WHERE [b].[BookId] = @__bookId_0 AND [b].[UserId] = @__userId_1 AND [b].[IsReturned] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-11 15:09:21.095 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Borrowings] AS [b]
+WHERE [b].[UserId] = @__userId_0 AND [b].[ReturnDate] = '0001-01-01T00:00:00.0000000'
+2025-05-11 15:09:21.101 +03:00 [WRN] User omar@gmail.com has reached the borrowing limit.
+2025-05-11 15:09:21.102 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:09:21.102 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 289.3391ms
+2025-05-11 15:09:21.103 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:09:21.105 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=2ed60396-f3c5-4686-92f8-a2d0bf0c58b4 - 200 null text/plain; charset=utf-8 294.7218ms
+2025-05-11 15:09:41.063 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/borrowing-history - null null
+2025-05-11 15:09:41.064 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem)'
+2025-05-11 15:09:41.072 +03:00 [INF] Route matched with {action = "GetBorrowingHistory", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBorrowingHistory() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:09:41.201 +03:00 [INF] Executed DbCommand (120ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 15:09:41.204 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:09:41.204 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem) in 132.3367ms
+2025-05-11 15:09:41.204 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetBorrowingHistory (LibraryManagementSystem)'
+2025-05-11 15:09:41.205 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/borrowing-history - 200 null application/json; charset=utf-8 141.9714ms
+2025-05-11 15:10:33.655 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=908037d2-0ec6-47c1-a86f-09b321f3f3e0 - null 0
+2025-05-11 15:10:33.656 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 15:10:33.670 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:10:33.823 +03:00 [INF] Executed DbCommand (74ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 15:10:35.110 +03:00 [INF] Executed DbCommand (627ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32), @p4='?' (DbType = Guid), @p2='?' (DbType = Boolean), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Books] SET [AvailableCopies] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Borrowings] SET [IsReturned] = @p2, [ReturnDate] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+2025-05-11 15:10:35.202 +03:00 [INF] Book with ID 0a480fec-ab71-4b47-8cef-8ad9df73407f returned successfully.
+2025-05-11 15:10:35.203 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:10:35.203 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 1532.921ms
+2025-05-11 15:10:35.203 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 15:10:35.203 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=908037d2-0ec6-47c1-a86f-09b321f3f3e0 - 200 null text/plain; charset=utf-8 1548.2894ms
+2025-05-11 15:10:43.524 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 15:10:43.527 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:10:43.527 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:10:44.804 +03:00 [INF] Executed DbCommand (1,274ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 15:10:44.807 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:10:44.807 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 1280.1378ms
+2025-05-11 15:10:44.807 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:10:44.808 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 1283.489ms
+2025-05-11 15:11:35.986 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Auth/login - application/json 55
+2025-05-11 15:11:36.011 +03:00 [INF] Executing endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:11:36.011 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LibraryManagementSystem.Models.LoginDto) on controller AuthController (LibraryManagementSystem).
+2025-05-11 15:11:36.293 +03:00 [INF] Executed DbCommand (210ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-05-11 15:11:36.706 +03:00 [INF] Executed DbCommand (39ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-05-11 15:11:36.711 +03:00 [INF] Login successful for user sema@gmail.com
+2025-05-11 15:11:36.711 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-05-11 15:11:36.711 +03:00 [INF] Executed action AuthController.Login (LibraryManagementSystem) in 699.9538ms
+2025-05-11 15:11:36.711 +03:00 [INF] Executed endpoint 'AuthController.Login (LibraryManagementSystem)'
+2025-05-11 15:11:36.712 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Auth/login - 200 null application/json; charset=utf-8 726.0988ms
+2025-05-11 15:12:19.053 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Users - null null
+2025-05-11 15:12:19.057 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 15:12:19.080 +03:00 [INF] Route matched with {action = "GetAllMembers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllMembers() on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 15:12:19.370 +03:00 [INF] Executed DbCommand (231ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 15:12:19.374 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.User, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:12:19.460 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem) in 379.8412ms
+2025-05-11 15:12:19.460 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 15:12:19.461 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Users - 200 null application/json; charset=utf-8 407.6122ms
+2025-05-11 15:12:37.198 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - null 0
+2025-05-11 15:12:37.201 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 15:12:37.215 +03:00 [INF] Route matched with {action = "DeactivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeactivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 15:12:37.280 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 15:12:37.293 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 15:12:37.397 +03:00 [INF] Executed DbCommand (69ms) [Parameters=[@p17='?' (DbType = Guid), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTimeOffset), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Boolean), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [Email] = @p2, [EmailConfirmed] = @p3, [IsActive] = @p4, [LockoutEnabled] = @p5, [LockoutEnd] = @p6, [NormalizedEmail] = @p7, [NormalizedUserName] = @p8, [Password] = @p9, [PasswordHash] = @p10, [PhoneNumber] = @p11, [PhoneNumberConfirmed] = @p12, [Role] = @p13, [SecurityStamp] = @p14, [TwoFactorEnabled] = @p15, [UserName] = @p16
+OUTPUT 1
+WHERE [Id] = @p17;
+2025-05-11 15:12:37.401 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:12:37.401 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem) in 185.7651ms
+2025-05-11 15:12:37.401 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 15:12:37.401 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - 200 null text/plain; charset=utf-8 203.2517ms
+2025-05-11 15:12:45.967 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Users - null null
+2025-05-11 15:12:45.969 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 15:12:45.969 +03:00 [INF] Route matched with {action = "GetAllMembers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllMembers() on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 15:12:46.091 +03:00 [INF] Executed DbCommand (118ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 15:12:46.092 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.User, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:12:46.093 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem) in 123.7026ms
+2025-05-11 15:12:46.093 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.GetAllMembers (LibraryManagementSystem)'
+2025-05-11 15:12:46.093 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Users - 200 null application/json; charset=utf-8 126.1951ms
+2025-05-11 15:12:59.295 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - null 0
+2025-05-11 15:12:59.299 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 15:12:59.299 +03:00 [INF] Route matched with {action = "DeactivateMember", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeactivateMember(System.Guid) on controller LibraryManagementSystem.Controllers.UsersController (LibraryManagementSystem).
+2025-05-11 15:12:59.323 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 15:12:59.362 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+2025-05-11 15:12:59.366 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:12:59.366 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem) in 67.2839ms
+2025-05-11 15:12:59.367 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.UsersController.DeactivateMember (LibraryManagementSystem)'
+2025-05-11 15:12:59.367 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Users/7830fc70-6da4-4565-b465-7777baf331a1/deactivate-member - 200 null text/plain; charset=utf-8 72.6413ms
+2025-05-11 15:13:59.331 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=2ed60396-f3c5-4686-92f8-a2d0bf0c58b4 - null 0
+2025-05-11 15:13:59.377 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:13:59.379 +03:00 [INF] Route matched with {action = "BorrowBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] BorrowBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:13:59.392 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2025-05-11 15:13:59.394 +03:00 [INF] User omar@gmail.com is not active.
+2025-05-11 15:13:59.395 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:13:59.395 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem) in 15.9655ms
+2025-05-11 15:13:59.395 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.BorrowBook (LibraryManagementSystem)'
+2025-05-11 15:13:59.396 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7189/api/Borrowings/borrow?bookId=2ed60396-f3c5-4686-92f8-a2d0bf0c58b4 - 200 null text/plain; charset=utf-8 65.1095ms
+2025-05-11 15:14:17.627 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 15:14:17.629 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:14:17.629 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:14:18.197 +03:00 [INF] Executed DbCommand (564ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 15:14:18.201 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:14:18.202 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 573.4382ms
+2025-05-11 15:14:18.203 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:14:18.203 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 575.9982ms
+2025-05-11 15:14:32.698 +03:00 [INF] Request starting HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=d1ff6e71-c6a4-46c4-b9ab-d8304f84fde9 - null 0
+2025-05-11 15:14:32.699 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 15:14:32.700 +03:00 [INF] Route matched with {action = "ReturnBook", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReturnBook(System.Guid) on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:14:32.811 +03:00 [INF] Executed DbCommand (106ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title], [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[Role], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+INNER JOIN [Users] AS [u] ON [b].[UserId] = [u].[Id]
+WHERE [b].[Id] = @__id_0
+2025-05-11 15:14:33.005 +03:00 [INF] Executed DbCommand (176ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32), @p4='?' (DbType = Guid), @p2='?' (DbType = Boolean), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Books] SET [AvailableCopies] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+UPDATE [Borrowings] SET [IsReturned] = @p2, [ReturnDate] = @p3
+OUTPUT 1
+WHERE [Id] = @p4;
+2025-05-11 15:14:33.007 +03:00 [INF] Book with ID bb136557-5436-41f3-8fc1-67c26e0cb359 returned successfully.
+2025-05-11 15:14:33.008 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-05-11 15:14:33.008 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem) in 308.2119ms
+2025-05-11 15:14:33.008 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.ReturnBook (LibraryManagementSystem)'
+2025-05-11 15:14:33.008 +03:00 [INF] Request finished HTTP/2 PUT https://localhost:7189/api/Borrowings/return?borrowingId=d1ff6e71-c6a4-46c4-b9ab-d8304f84fde9 - 200 null text/plain; charset=utf-8 310.3565ms
+2025-05-11 15:14:41.480 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - null null
+2025-05-11 15:14:41.485 +03:00 [INF] Executing endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:14:41.485 +03:00 [INF] Route matched with {action = "GetActiveBorrowings", controller = "Borrowings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetActiveBorrowings() on controller LibraryManagementSystem.Controllers.BorrowingsController (LibraryManagementSystem).
+2025-05-11 15:14:41.585 +03:00 [INF] Executed DbCommand (97ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[BookId], [b].[BorrowDate], [b].[DueDate], [b].[IsReturned], [b].[ReturnDate], [b].[UserId], [b0].[Id], [b0].[Author], [b0].[AvailableCopies], [b0].[Genre], [b0].[ISBN], [b0].[PublicationYear], [b0].[Quantity], [b0].[TimesBorrowed], [b0].[Title]
+FROM [Borrowings] AS [b]
+INNER JOIN [Books] AS [b0] ON [b].[BookId] = [b0].[Id]
+WHERE [b].[UserId] = @__userId_0
+2025-05-11 15:14:41.587 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[LibraryManagementSystem.Models.BorrowingHistoryDto, LibraryManagementSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-11 15:14:41.587 +03:00 [INF] Executed action LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem) in 101.6548ms
+2025-05-11 15:14:41.587 +03:00 [INF] Executed endpoint 'LibraryManagementSystem.Controllers.BorrowingsController.GetActiveBorrowings (LibraryManagementSystem)'
+2025-05-11 15:14:41.588 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7189/api/Borrowings/active-borrowings - 200 null application/json; charset=utf-8 107.4024ms
+2025-05-11 15:28:23.938 +03:00 [INF] User profile is available. Using 'C:\Users\myss\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-11 15:28:24.955 +03:00 [INF] Now listening on: https://localhost:7189
+2025-05-11 15:28:24.957 +03:00 [INF] Now listening on: http://localhost:5013
+2025-05-11 15:28:25.314 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-11 15:28:25.314 +03:00 [INF] Hosting environment: Development
+2025-05-11 15:28:25.315 +03:00 [INF] Content root path: C:\Users\myss\source\repos\LibraryManagementSystem\LibraryManagementSystem
